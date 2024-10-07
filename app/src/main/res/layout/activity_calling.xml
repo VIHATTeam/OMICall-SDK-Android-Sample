@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/backgroundView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    tools:context="vn.vihat.omisample.CallingActivity"
+    >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/callAudioWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/stateDirectionIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_call_status_local" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/stateSipNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:includeFontPadding="false"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    tools:text="02727777787" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/stateStartAt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                tools:text="Cuộc gọi đến 19:08" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+
+                        <vn.vihat.omicall.omisdk.component.AvatarView
+                            android:id="@+id/audioRemoteAvatar"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            app:cardCornerRadius="36dp" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="8dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/audioRemoteName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            tools:text="Nguyễn Văn A" />
+
+                    </FrameLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/audioRemoteNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:text="0844441909" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/uuid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:text="uuid" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/audioExtraButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:visibility="gone"
+            app:flexWrap="wrap"
+            app:justifyContent="center"
+            tools:visibility="visible">
+
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnTransferCall"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="8dp"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/voice_ic_in_call_in"
+                custom:layout_startIconColor="@color/white" />
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnShowNumpad"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="8dp"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_ten_keys_filled"
+                custom:layout_startIconColor="@color/white" />
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnToggleAudioMute"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="8dp"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_block_microphone"
+                custom:layout_startIconColor="@color/white" />
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnToggleSpeaker"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_voice_volume"
+                custom:layout_startIconColor="@color/white" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/stateCallStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="00:01 | connecting" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/callPingWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingVertical="4dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stateCallStatus"
+                tools:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/callPingIcon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="2dp"
+                    app:srcCompat="@drawable/ic_call_network_status" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/callPingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/success"
+                    android:textSize="12sp"
+                    tools:text="12ms" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/callStateActions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="32dp"
+                app:alignItems="flex_end"
+                app:flexDirection="row"
+                app:justifyContent="space_around"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:gravity="center">
+
+                    <vn.vihat.omicall.omisdk.component.ButtonView
+                        android:id="@+id/btnEndAudioCall"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        custom:layout_circle="true"
+                        custom:layout_color="@color/error"
+                        custom:layout_startIcon="@drawable/ic_end_call_filled"
+                        custom:layout_startIconColor="@color/white"
+                        custom:layout_startIconSize="32" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnAcceptCallWrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    tools:visibility="visible">
+
+
+                    <vn.vihat.omicall.omisdk.component.PulseAnim
+                        android:id="@+id/btnAcceptCallAnim"
+                        android:layout_width="152dp"
+                        android:layout_height="132dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        custom:layout_color="@color/success"
+                        custom:layout_size="64" />
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:id="@+id/btnAcceptCallSeek"
+                        android:layout_width="152dp"
+                        android:layout_height="152dp"
+                        android:layout_marginBottom="32dp"
+                        android:background="@null"
+                        android:maxWidth="5dp"
+                        android:minWidth="5dp"
+                        android:paddingStart="32dp"
+                        android:paddingEnd="32dp"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/bg_btn_accept_call_seekbar"
+                        android:rotation="-90"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/bg_btn_accept_call_thumb"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/callVideoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black">
+
+            <TextureView
+                android:id="@+id/videoRemoteStream"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/callVideoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/videoLocalWrapper"
+            android:layout_width="100dp"
+            android:layout_height="178dp"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintDimensionRatio="0.8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/videoLocalContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    app:cardBackgroundColor="@color/black"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
+
+                    <TextureView
+                        android:id="@+id/videoLocalStream"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/videoLocalMicStatus"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_block_microphone"
+                    android:tint="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/videoRemoteInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4">
+
+            <vn.vihat.omicall.omisdk.component.AvatarView
+                android:id="@+id/videoRemoteAvatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                app:cardCornerRadius="36dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/videoRemoteName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="Nguyễn Văn A" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/videoRemoteNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="100" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/videoExtraButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            app:justifyContent="space_around"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnToggleCamera"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                custom:layout_circle="true"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_no_video" />
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnToggleVideoMute"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                custom:layout_circle="true"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_block_microphone" />
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnSwitchCamera"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                custom:layout_circle="true"
+                custom:layout_color="@color/white10"
+                custom:layout_startIcon="@drawable/ic_switch_camera" />
+
+            <vn.vihat.omicall.omisdk.component.ButtonView
+                android:id="@+id/btnEndVideoCall"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                custom:layout_circle="true"
+                custom:layout_color="@color/error"
+                custom:layout_startIcon="@drawable/ic_end_call_filled"
+                custom:layout_startIconColor="@color/white" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

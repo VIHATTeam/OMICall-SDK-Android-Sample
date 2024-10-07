@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff5f6fa"
+    tools:context="vn.vihat.omisample.FirstFragment"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SIP User"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/sipRealm"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="sip_realm"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/sipUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="sip_user"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/sipPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="sip_password"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SIP UUID"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/apiKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="API_KEY"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="user_name"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/userPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="user_phone"
+                    android:inputType="text"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/sipUuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginVertical="8dp"
+                    android:backgroundTint="@drawable/edit_text_background"
+                    android:hint="sip_uuid"
+                    android:inputType="text"
+                    android:text="0358380646"
+                    android:textColor="@color/black"
+                    android:textColorHint="#ff7d7d7d"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:paddingHorizontal="32dp"
+                android:text="Register" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
