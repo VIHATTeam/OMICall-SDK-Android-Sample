@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vn.vihat.omisample.SecondFragment">
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/testAvatarView"-->
+    <!--        android:layout_width="80dp"-->
+    <!--        android:layout_height="80dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/backToCall"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:background="@color/error"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="2dp"-->
+<!--        android:text="Có cuộc gọi đang diễn ra, nhấn để quay lại"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="15sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/infoWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/btnCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sipConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginBottom="16dp"
+            android:hint="Connection status: -"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sipRealm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginBottom="16dp"
+            android:hint="Current sip_realm: -"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sipUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:layout_marginBottom="16dp"
+            android:hint="Current sip_user: -"
+            android:textSize="18sp" />
+
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/sipConnection"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginHorizontal="@dimen/margin_big"-->
+        <!--            android:layout_marginBottom="16dp"-->
+        <!--            android:hint="Connection: connecting"-->
+        <!--            android:textSize="18sp" />-->
+
+        <EditText
+            android:id="@+id/txtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_big"
+            android:hint="Remote number"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/switchIsVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Video call"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
+
+        <!--        <Switch-->
+        <!--            android:id="@+id/useTCP"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="16dp"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:text="Use TCP"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/switchIsVideo" />-->
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Transport:"
+            />
+        <RadioGroup
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/auto"
+                android:text="Auto select"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/tcp"
+                android:text="Use TCP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/udp"
+                android:text="Use UDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <Button
+        android:id="@+id/btnCall"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="Gọi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infoWrapper" />
+
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Đăng xuất"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCall" />
+
+    <TextView
+        android:id="@+id/btnSecondActivity"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Mở activity thứ 2"
+        android:textAlignment="center"
+        android:textColor="@color/info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
