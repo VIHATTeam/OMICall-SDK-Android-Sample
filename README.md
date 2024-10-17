@@ -13,7 +13,7 @@ Dưới đây là các bước để tích hợp OmiSDK vào dự án của bạ
 ```gradle
 dependencies {
     // ...
-    api "vn.vihat.omicall:omi-sdk:2.3.8"
+    api "vn.vihat.omicall:omi-sdk:2.3.10"
     //...
 }
 ```
@@ -168,6 +168,7 @@ Config push notification 1 lần hoặc bất kỳ lúc nào bạn muốn cập 
     missedChannelId = "missed_calls_channel",
     missedChannelName = "Missed Calls Channel",
     notificationIcon = "ic_call_status_inbound",
+    notificationColor = "#FF0000",
     videoCallText = "Gọi Video",
     internalCallText = "Gọi nội bộ",
     inboundCallText = "Cuộc gọi đến",
@@ -185,6 +186,7 @@ Các tham số truyền vào:
 - `buttonDecline`: Tên của icon hiển thị ở nút từ chối cuộc gọi, được đặt trong thư
   mục `res/drawable`
 - `notificationIcon`: Tên của icon hiển thị ở thông báo, được đặt trong thư mục `res/drawable`
+- `notificationColor`: Màu của icon thông báo
 - `notificationMissedCallPrefix`: Tiền tố của thông báo cuộc gọi nhỡ
 - `inboundChannelId`: ID của channel hiển thị thông báo cuộc gọi đến
 - `inboundChannelName`: Tên của channel hiển thị thông báo cuộc gọi đến

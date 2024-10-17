@@ -11,7 +11,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-
         classpath (libs.google.services)
     }
 }

@@ -45,10 +45,6 @@ class FirstFragment : Fragment() {
         val defaultSipUser = "100"
         val defaultSipPassword = "Duongngocqui@98"
 
-//        val defaultSipRealm = "testtuanla2k1"
-//        val defaultSipUser = "100"
-//        val defaultSipPassword = "TestTuanLa2001"
-
         val defaultApiKey = ""
         val defaultUserName = ""
         val defaultUserPhone = ""
@@ -136,7 +132,7 @@ class FirstFragment : Fragment() {
                                 sipRealm,
                                 isVideoCall,
                                 firebaseToken,
-                                projectId = "omi-test-39522"
+                                projectId = "326362736782"
                             )
                             if (result) {
                                 AppUtils.setSession(requireContext(), true)
