@@ -1,27 +1,25 @@
 package vn.vihat.omisample
 
-import PrefManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import vn.vihat.omicall.R
 import vn.vihat.omicall.databinding.FragmentFirstBinding
 import vn.vihat.omicall.omisdk.OmiClient
 import vn.vihat.omicall.omisdk.const.PrefConstants
+import vn.vihat.omicall.omisdk.utils.PrefManager
 import vn.vihat.omicall.omisdk.utils.OmiSDKUtils
 import vn.vihat.omisample.utils.AppUtils
 
 class FirstFragment : Fragment() {
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
     private var isRegisteringWithUuid = false
@@ -37,13 +35,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val defaultSipRealm = ""
-//        val defaultSipUser = ""
-//        val defaultSipPassword = ""
-
-        val defaultSipRealm = "quidn"
+        // Default values for testing - leave empty for production
+        val defaultSipRealm = "namplh"
         val defaultSipUser = "100"
-        val defaultSipPassword = "Duongngocqui@98"
+        val defaultSipPassword = "Matkhau@2025"
+
 
         val defaultApiKey = ""
         val defaultUserName = ""
@@ -101,7 +97,7 @@ class FirstFragment : Fragment() {
                         return@OnCompleteListener
                     }
                     val firebaseToken = task.result ?: ""
-                    coroutineScope.launch {
+                    lifecycleScope.launch {
                         if (!isEmptySipUuid) {
                             isRegisteringWithUuid = true
                             val result = OmiClient.registerWithApiKey(
@@ -116,7 +112,6 @@ class FirstFragment : Fragment() {
                             if (result) {
                                 AppUtils.setSession(requireContext(), true)
                                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-
                             } else {
                                 Toast.makeText(
                                     requireContext(),

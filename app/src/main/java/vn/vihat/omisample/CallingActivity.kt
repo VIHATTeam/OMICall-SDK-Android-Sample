@@ -88,6 +88,14 @@ class CallingActivity : AppCompatActivity(), OmiListener {
     private var isShowActionButton = true
     private var isOffCamera = false
 
+    // Network health tracking
+    private var lastLcnValue: Int = -1
+    private var consecutiveSameLcnCount: Int = 0
+
+    // Remote video size tracking for proper aspect ratio
+    private var remoteVideoWidth: Int = 1280
+    private var remoteVideoHeight: Int = 720
+
     //state config
     private var backgroundColor = "#FF1E3150"
     private var defaultAvatar = "calling_face"
@@ -514,15 +522,26 @@ class CallingActivity : AppCompatActivity(), OmiListener {
             val surface = Surface(textureView.surfaceTexture)
             if (isLocal) {
                 omiClient.setupLocalVideoFeed(surface)
+                // Local video: Use 9:16 portrait aspect ratio for front camera
+                // This ratio works for all devices regardless of actual resolution
+                Log.d("App", "handleSetVideoStream -> Local video aspect ratio: 9:16 (portrait)")
+                ScaleManager.adjustAspectRatio(
+                    textureView,
+                    Size(textureView.width, textureView.height),
+                    Size(9, 16),  // Use ratio instead of fixed pixels
+                )
             } else {
                 omiClient.setupIncomingVideoFeed(surface)
                 binding.videoRemoteInfo.isVisible = false
+                // Remote video uses dynamic size from onVideoSize callback
+                // Initial size may be updated later when actual video size is received
+                Log.d("App", "handleSetVideoStream -> Remote video initial size: ${remoteVideoWidth}x${remoteVideoHeight}")
+                ScaleManager.adjustAspectRatio(
+                    textureView,
+                    Size(textureView.width, textureView.height),
+                    Size(remoteVideoWidth, remoteVideoHeight),
+                )
             }
-            ScaleManager.adjustAspectRatio(
-                textureView,
-                Size(textureView.width, textureView.height),
-                Size(1280, 720),
-            )
         } catch (e: Throwable) {
             e.printStackTrace()
         }
@@ -677,6 +696,28 @@ class CallingActivity : AppCompatActivity(), OmiListener {
     }
     override fun onVideoSize(width: Int, height: Int) {
         Log.d("App", "onVideoSize: $width, $height")
+        // Update remote video size and re-apply aspect ratio
+        if (width > 0 && height > 0) {
+            remoteVideoWidth = width
+            remoteVideoHeight = height
+
+            // Re-apply aspect ratio to remote video view if it's available
+            runOnUiThread {
+                try {
+                    val remoteVideoView = binding.videoRemoteStream
+                    if (remoteVideoView.isAvailable && remoteVideoView.width > 0 && remoteVideoView.height > 0) {
+                        Log.d("App", "onVideoSize -> Adjusting aspect ratio to ${width}x${height}")
+                        ScaleManager.adjustAspectRatio(
+                            remoteVideoView,
+                            Size(remoteVideoView.width, remoteVideoView.height),
+                            Size(width, height),
+                        )
+                    }
+                } catch (e: Throwable) {
+                    Log.e("App", "onVideoSize -> Error adjusting aspect ratio", e)
+                }
+            }
+        }
     }
 
     override fun onSwitchBoardAnswer(sip: String) {
@@ -687,15 +728,28 @@ class CallingActivity : AppCompatActivity(), OmiListener {
         Log.d("App", "networkHealth: $stat, $quality")
         lifecycleScope.launch(Dispatchers.Main) {
             try {
-                val numSameMode = stat["lcn"] as? Int ?: 0
+                val currentLcnValue = stat["lcn"] as? Int ?: 0
 
-                if (numSameMode != 0 && numSameMode % 3 == 0) {
-                    startCountDown(overlayLoading != null)
-                } else {
-                    if (numSameMode == 0) {
-                        cancelCountDown()
+                // Track consecutive same LCN values
+                if (currentLcnValue == lastLcnValue && currentLcnValue != 0) {
+                    consecutiveSameLcnCount++
+                    Log.d("App", "networkHealth -> Same LCN value ($currentLcnValue) detected $consecutiveSameLcnCount times")
+
+                    // Show loading overlay after 3 consecutive same values (indicating poor network)
+                    if (consecutiveSameLcnCount >= 3) {
+                        Log.d("App", "networkHealth -> Poor network detected - showing overlay")
+                        startCountDown(overlayLoading != null)
                     }
+                } else {
+                    // LCN value changed or is 0 - network is working
+                    if (consecutiveSameLcnCount > 0) {
+                        Log.d("App", "networkHealth -> LCN changed from $lastLcnValue to $currentLcnValue - network recovered")
+                    }
+                    consecutiveSameLcnCount = 0
+                    cancelCountDown()
                 }
+
+                lastLcnValue = currentLcnValue
 
                 val mos = stat["mos"] as? Float
                 val pingColor =

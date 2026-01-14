@@ -4,7 +4,7 @@ converterGson = "2.9.0"
 firebaseBom = "32.2.0"
 firebaseMessagingKtx = "23.2.1"
 flexbox = "3.0.0"
-googleServices = "4.4.1"
+googleServices = "4.4.2"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -17,10 +17,13 @@ activity = "1.9.1"
 constraintlayout = "2.1.4"
 materialVersion = "1.9.0"
 navigationFragmentKtx = "2.6.0"
-omiSdk = "2.3.8"
+omiSdk = "2.5.7"
 lifecycleProcess = "2.8.5"
+lifecycleLivedata = "2.6.2"
 securityCrypto = "1.1.0-alpha06"
 workRuntimeKtx = "2.8.1"
+coroutines = "1.7.2"
+gson = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,12 +45,14 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material-v190 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-omi-sdk = { module = "vn.vihat.omicall:omi-sdk", version.ref = "omiSdk" }
+omi-sdk = { module = "io.omicrm.vihat:omi-sdk", version.ref = "omiSdk" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
+androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedata" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
-

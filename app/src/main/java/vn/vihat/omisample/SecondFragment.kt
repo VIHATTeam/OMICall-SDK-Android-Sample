@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,7 @@ import vn.vihat.omicall.R
 import vn.vihat.omicall.databinding.FragmentSecondBinding
 import vn.vihat.omicall.omisdk.OmiClient
 import vn.vihat.omicall.omisdk.utils.OmiSipTransport
+import vn.vihat.omicall.omisdk.utils.OmiStartCallStatus
 import vn.vihat.omicall.omisdk.utils.SipServiceConstants
 import vn.vihat.omisample.utils.AppUtils
 
@@ -47,12 +50,18 @@ class SecondFragment : Fragment() {
         binding.sipUser.text = curSipUser
 
         binding.txtPhone.setOnEditorActionListener { _, _, event ->
-            if (event.action == KeyEvent.ACTION_UP) handleMakeCall()
+            if (event.action == KeyEvent.ACTION_UP) {
+                lifecycleScope.launch {
+                    handleMakeCall()
+                }
+            }
             true
         }
 
         binding.btnCall.setOnClickListener {
-            handleMakeCall()
+            lifecycleScope.launch {
+                handleMakeCall()
+            }
         }
 
         binding.btnLogout.setOnClickListener {
@@ -93,13 +102,22 @@ class SecondFragment : Fragment() {
         }
 
 
-    private fun handleMakeCall() {
+    private suspend fun handleMakeCall() {
         val isVideo = binding.switchIsVideo.isChecked
-        val intent = Intent(context, CallingActivity::class.java)
-        intent.putExtra(SipServiceConstants.PARAM_NUMBER, "${binding.txtPhone.text}")
-        intent.putExtra(SipServiceConstants.PARAM_IS_VIDEO, isVideo)
-        startActivity(intent)
-
+        val result = OmiClient.getInstance(appContext).startCall(
+            "${binding.txtPhone.text}",
+            isVideo = isVideo,
+            name = "",
+            avatar = ""
+        )
+        if (result == OmiStartCallStatus.SUCCESS || result == OmiStartCallStatus.SWITCHBOARD_REGISTERING) {
+            val intent = Intent(context, CallingActivity::class.java)
+            intent.putExtra(SipServiceConstants.PARAM_NUMBER, "${binding.txtPhone.text}")
+            intent.putExtra(SipServiceConstants.PARAM_IS_VIDEO, isVideo)
+            startActivity(intent)
+        } else {
+            Toast.makeText(context, "Start call have some errors $result", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

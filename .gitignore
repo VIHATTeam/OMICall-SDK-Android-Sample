@@ -14,3 +14,7 @@
 .cxx
 local.properties
 /app/google-services.json
+
+# Gradle properties with sensitive credentials
+gradle.properties
+
