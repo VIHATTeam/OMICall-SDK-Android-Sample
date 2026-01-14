@@ -42,7 +42,7 @@ Dưới đây là các bước để tích hợp OmiSDK vào dự án của bạ
 │                               OmiSDK                                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐  ┌──────────────┐ │
-│  │  SIP Service  │  │ Notification  │  │    PJSIP      │  │   Firebase   │ │
+│  │  SIP Service  │  │ Notification  │  │    OMISIP      │  │   Firebase   │ │
 │  │   Manager     │  │   Service     │  │    Engine     │  │     FCM      │ │
 │  └───────┬───────┘  └───────┬───────┘  └───────┬───────┘  └──────┬───────┘ │
 │          │                  │                  │                  │         │
