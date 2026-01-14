@@ -363,6 +363,23 @@ Thêm các quyền cần thiết vào tệp `AndroidManifest.xml`:
 </manifest>
 ```
 
+> **⚠️ LƯU Ý QUAN TRỌNG: Nếu không sử dụng Video Call**
+>
+> SDK mặc định khai báo quyền `FOREGROUND_SERVICE_CAMERA` cho tính năng video call. Nếu app của bạn **KHÔNG sử dụng video call**, bạn **BẮT BUỘC** phải override để xóa quyền này, nếu không app sẽ **CRASH** trên Android 14+ khi không có quyền camera.
+>
+> Thêm dòng sau vào `AndroidManifest.xml`:
+> ```xml
+> <!-- Remove camera foreground service if NOT using video call -->
+> <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"
+>     tools:node="remove" />
+> ```
+>
+> Đồng thời xóa quyền CAMERA nếu không cần:
+> ```xml
+> <uses-permission android:name="android.permission.CAMERA"
+>     tools:node="remove" />
+> ```
+
 Thêm intent filter cho activity hiển thị cuộc gọi:
 
 ```xml
