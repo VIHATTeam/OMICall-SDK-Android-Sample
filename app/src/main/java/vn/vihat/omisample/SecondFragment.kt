@@ -2,6 +2,7 @@ package vn.vihat.omisample
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -65,13 +66,7 @@ class SecondFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            mainScope.launch {
-                withContext(Dispatchers.Default) {
-                    AppUtils.setSession(appContext, false)
-                    OmiClient.getInstance(appContext).logout()
-                }
-            }
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            handleLogout()
         }
 
         binding.auto.isChecked =
@@ -102,6 +97,36 @@ class SecondFragment : Fragment() {
         }
 
 
+    private fun handleLogout() {
+        binding.btnLogout.isEnabled = false
+        binding.btnLogout.text = "Logging out..."
+
+        lifecycleScope.launch {
+            val startTime = System.currentTimeMillis()
+            try {
+                AppUtils.setSession(appContext, false)
+                OmiClient.getInstance(appContext).logout(onCompleted = {
+                    val elapsed = System.currentTimeMillis() - startTime
+                    Log.d("SecondFragment", "logout -> onCompleted fired after ${elapsed}ms")
+
+                    activity?.runOnUiThread {
+                        binding.btnLogout.isEnabled = true
+                        binding.btnLogout.text = "Đăng xuất"
+                        Toast.makeText(context, "Logout completed in ${elapsed}ms", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                    }
+                })
+            } catch (e: Exception) {
+                Log.e("SecondFragment", "logout -> Error: ${e.message}", e)
+                activity?.runOnUiThread {
+                    binding.btnLogout.isEnabled = true
+                    binding.btnLogout.text = "Đăng xuất"
+                    Toast.makeText(context, "Logout error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private suspend fun handleMakeCall() {
         val isVideo = binding.switchIsVideo.isChecked
         val result = OmiClient.getInstance(appContext).startCall(
@@ -110,13 +135,19 @@ class SecondFragment : Fragment() {
             name = "",
             avatar = ""
         )
-        if (result == OmiStartCallStatus.SUCCESS || result == OmiStartCallStatus.SWITCHBOARD_REGISTERING) {
-            val intent = Intent(context, CallingActivity::class.java)
-            intent.putExtra(SipServiceConstants.PARAM_NUMBER, "${binding.txtPhone.text}")
-            intent.putExtra(SipServiceConstants.PARAM_IS_VIDEO, isVideo)
-            startActivity(intent)
-        } else {
-            Toast.makeText(context, "Start call have some errors $result", Toast.LENGTH_SHORT).show()
+        when (result) {
+            OmiStartCallStatus.SUCCESS, OmiStartCallStatus.SWITCHBOARD_REGISTERING -> {
+                val intent = Intent(context, CallingActivity::class.java)
+                intent.putExtra(SipServiceConstants.PARAM_NUMBER, "${binding.txtPhone.text}")
+                intent.putExtra(SipServiceConstants.PARAM_IS_VIDEO, isVideo)
+                startActivity(intent)
+            }
+            OmiStartCallStatus.NO_NETWORK -> {
+                Toast.makeText(context, "Không có kết nối mạng. Vui lòng kiểm tra lại.", Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                Toast.makeText(context, "Start call error: ${result.name} (${result.value})", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -188,7 +188,7 @@ Dưới đây là các bước để tích hợp OmiSDK vào dự án của bạ
 │                                                                             │
 │  ┌─────┐                                                                    │
 │  │  1  │  SETUP GRADLE                                                      │
-│  └──┬──┘  • Add SDK dependency: io.omicrm.vihat:omi-sdk:2.5.7              │
+│  └──┬──┘  • Add SDK dependency: io.omicrm.vihat:omi-sdk:2.6.4              │
 │     │     • Add GitHub repository with credentials                          │
 │     │     • Configure compileSdk=35, minSdk=24, Java 11                     │
 │     ▼                                                                       │
@@ -263,7 +263,7 @@ android {
 
 dependencies {
     // OmiSDK - Phiên bản mới nhất
-    implementation("io.omicrm.vihat:omi-sdk:2.5.7")
+    implementation("io.omicrm.vihat:omi-sdk:2.6.4")
 }
 ```
 
@@ -811,6 +811,10 @@ lifecycleScope.launch {
             intent.putExtra(SipServiceConstants.PARAM_IS_VIDEO, isVideo)
             startActivity(intent)
         }
+        OmiStartCallStatus.NO_NETWORK -> {
+            // Không có kết nối mạng (WiFi, 4G/5G đều tắt)
+            Toast.makeText(context, "Không có kết nối mạng. Vui lòng kiểm tra lại.", Toast.LENGTH_LONG).show()
+        }
         OmiStartCallStatus.SWITCHBOARD_REGISTERING -> {
             // Đang kết nối tổng đài, cuộc gọi sẽ được thực hiện sau khi kết nối thành công
             // Có thể chuyển đến CallingActivity để hiển thị trạng thái connecting
@@ -839,6 +843,7 @@ Trả về: enum `OmiStartCallStatus`
 - `MISSING_AUDIO_PERMISSION`: Thiếu quyền ghi âm
 - `MISSING_VIDEO_PERMISSION`: Thiếu quyền camera
 - `SWITCHBOARD_REGISTERING`: Đang kết nối tổng đài
+- `NO_NETWORK`: Không có kết nối mạng (WiFi, 4G/5G đều tắt) — *mới từ v2.6.4*
 - `SUCCESS`: Gọi thành công
 
 ### Nhận cuộc gọi
@@ -946,7 +951,7 @@ Sau khi gọi hàm này, OmiSDK sẽ kết thúc cuộc gọi và trả về k�
 - `omiClient.getSipUser()`: Lấy sip user hiện tại
 - `omiClient.getSipTransport()`: Lấy transport hiện tại (AUTO, TCP, UDP)
 - `omiClient.updateSipTransport(transport)`: Cập nhật transport (OmiSipTransport.AUTO, OmiSipTransport.TCP, OmiSipTransport.UDP)
-- `omiClient.logout()`: Đăng xuất (clear session)
+- `omiClient.logout(onCompleted = { ... })`: Đăng xuất (clear session). Callback `onCompleted` được gọi sau khi SIP stack dừng hoàn toàn (timeout 5s). An toàn để gọi `autoRegister()` ngay trong callback nếu cần login lại ngay — *mới từ v2.6.4*
 
 ### Status Call
 - 0: Cuộc gọi chưa bắt đầu
