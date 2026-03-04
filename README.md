@@ -951,7 +951,7 @@ Sau khi gọi hàm này, OmiSDK sẽ kết thúc cuộc gọi và trả về k�
 - `omiClient.getSipUser()`: Lấy sip user hiện tại
 - `omiClient.getSipTransport()`: Lấy transport hiện tại (AUTO, TCP, UDP)
 - `omiClient.updateSipTransport(transport)`: Cập nhật transport (OmiSipTransport.AUTO, OmiSipTransport.TCP, OmiSipTransport.UDP)
-- `omiClient.logout(onCompleted = { ... })`: Đăng xuất (clear session). Callback `onCompleted` được gọi sau khi SIP stack dừng hoàn toàn (timeout 5s). An toàn để gọi `autoRegister()` ngay trong callback nếu cần login lại ngay — *mới từ v2.6.4*
+- `omiClient.logout(onCompleted = { ... })`: Đăng xuất (clear session). Callback `onCompleted` được gọi sau khi OMISIP stack dừng hoàn toàn. An toàn để gọi ngay trong callback nếu cần login lại ngay — *mới từ v2.6.4*
 
 ### Status Call
 - 0: Cuộc gọi chưa bắt đầu
