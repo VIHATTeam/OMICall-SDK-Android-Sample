@@ -59,14 +59,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # 2.6.7 [01/04/2026]
 
-## Crash Fixes (558 crashes, 220 users — from Firebase Crashlytics)
+## Crash Fixes
 
-- **Fix ForegroundServiceDidNotStartInTimeException (Crash #1,3,4,5 — 419 crashes, 148 users)**
+- **Fix ForegroundServiceDidNotStartInTimeException**
   - Root cause: `onStartCommand()` used `createSystemNotification()` which iterates `registrationStatus` map and calls `createNotificationBuilder()` — either could fail or delay, causing `startForeground()` to miss the 5-second Android deadline
   - Fix: Use `createMinimalNotification()` (direct, no dependencies, cannot fail) in `onStartCommand()`. Notification gets updated later when registration status changes
   - Affected all SDK versions from 2.1.82 to 2.1.138
 
-- **Fix NullPointerException in OMISIP `onCallState` upcall (Crash #2 — 139 crashes, 72 users)**
+- **Fix NullPointerException in OMISIP `onCallState` upcall**
   - Root cause: SWIG C++ director fires `onCallState` callback after Java Call object is already `delete()`'d — the NPE is thrown in JNI dispatch layer, before Java method body executes, so existing inner guards (`mDeleteCalled`, `isNativeValid`) cannot catch it
   - Fix: Wrap `onCallState()` in outer try-catch `NullPointerException` to absorb SWIG director NPE. Call is already dead at this point — safe to ignore
   - Also applied same NPE guard to `onCallMediaState()` and added `mDeleteCalled`/`isNativeValid` checks (previously missing)
@@ -184,11 +184,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Crash Fixes
 
-- **Fix P0: `ForegroundServiceDidNotStartInTimeException` (271 crashes, 109 users)**
+- **Fix `ForegroundServiceDidNotStartInTimeException`**
   - Root cause: `onStartCommand()` had condition `!isForegroundStarted && !mStarted` — when `mStarted=true` but `isForegroundStarted=false` (SIP stack running but foreground stopped), condition short-circuited and `startForeground()` was never called for the new `startForegroundService()` intent → 5-second timeout → crash
   - Fix: Removed `&& !mStarted` guard from condition, making it simply `!isForegroundStarted`. `ForegroundServiceStartNotAllowedException` handler already preserves service when `mStarted=true` or `hasAnyActiveCalls()`, so no regression for running-SIP-stack case.
 
-- **Fix P1: `NullPointerException: null upcall object in pj::Call::onCallState` (69 crashes, 44 users)**
+- **Fix `NullPointerException: null upcall object in pj::Call::onCallState`**
   - Root cause: Concurrent `DISCONNECTED` callbacks from OMISIP racing to call `delete()` on the same native C++ `Call` object — double-free corrupts OMISIP's native weak-reference table, causing subsequent `onCallState` invocations to find a null Java upcall object
   - Fix A: Added `AtomicBoolean mDeleteCalled` — `delete()` now uses `compareAndSet(false, true)` to ensure it is called exactly once across any number of concurrent DISCONNECTED callbacks
   - Fix B: Added early `mDeleteCalled.get()` and `!isNativeValid` guards at the top of `onCallState()` to short-circuit any callback that arrives after `delete()` has been initiated by another thread
