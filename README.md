@@ -1,5 +1,11 @@
 # Hướng dẫn tích hợp OmiSDK vào dự án Android
 
+![SDK Version](https://img.shields.io/badge/OmiSDK-2.6.9-blue)
+![Min SDK](https://img.shields.io/badge/minSdk-24-green)
+![Target SDK](https://img.shields.io/badge/targetSdk-35-green)
+
+> Xem lịch sử thay đổi tại [CHANGELOG.md](CHANGELOG.md)
+
 ## Giới thiệu
 
 OmiSDK là một SDK mạnh mẽ giúp bạn tích hợp các tính năng gọi điện vào ứng dụng Android của mình.
@@ -188,7 +194,7 @@ Dưới đây là các bước để tích hợp OmiSDK vào dự án của bạ
 │                                                                             │
 │  ┌─────┐                                                                    │
 │  │  1  │  SETUP GRADLE                                                      │
-│  └──┬──┘  • Add SDK dependency: io.omicrm.vihat:omi-sdk:2.6.4              │
+│  └──┬──┘  • Add SDK dependency: io.omicrm.vihat:omi-sdk:2.6.9              │
 │     │     • Add GitHub repository with credentials                          │
 │     │     • Configure compileSdk=35, minSdk=24, Java 11                     │
 │     ▼                                                                       │
@@ -263,7 +269,7 @@ android {
 
 dependencies {
     // OmiSDK - Phiên bản mới nhất
-    implementation("io.omicrm.vihat:omi-sdk:2.6.4")
+    implementation("io.omicrm.vihat:omi-sdk:2.6.9")
 }
 ```
 
@@ -363,6 +369,20 @@ Thêm các quyền cần thiết vào tệp `AndroidManifest.xml`:
 </manifest>
 ```
 
+> **📋 LƯU Ý: Đồng bộ lịch sử cuộc gọi vào thiết bị (`WRITE_CALL_LOG`)**
+>
+> SDK mặc định khai báo quyền `WRITE_CALL_LOG` để tự động lưu cuộc gọi VoIP vào lịch sử cuộc gọi của thiết bị.
+>
+> - **Muốn lưu call log**: Không cần làm gì thêm — SDK tự xử lý.
+> - **Không muốn lưu call log**: Thêm dòng sau vào `AndroidManifest.xml` để override:
+> ```xml
+> <!-- Remove call log permission if you do NOT want VoIP calls saved to device call history -->
+> <uses-permission android:name="android.permission.WRITE_CALL_LOG"
+>     tools:node="remove" />
+> ```
+>
+> **⚠️ Lưu ý khi dùng tính năng ẩn số điện thoại (`setCanShowPhoneNumber(false)`):** SDK sẽ tự động **bỏ qua** việc ghi call log để tránh lưu số thật vào thiết bị, bất kể quyền có được cấp hay không.
+
 > **⚠️ LƯU Ý QUAN TRỌNG: Nếu không sử dụng Video Call**
 >
 > SDK mặc định khai báo quyền `FOREGROUND_SERVICE_CAMERA` cho tính năng video call. Nếu app của bạn **KHÔNG sử dụng video call**, bạn **BẮT BUỘC** phải override để xóa quyền này, nếu không app sẽ **CRASH** trên Android 14+ khi không có quyền camera.
@@ -393,6 +413,7 @@ Thêm intent filter cho activity hiển thị cuộc gọi:
         android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.CALL" />
+            <action android:name="${applicationId}.ACTION_INCOMING_CALL" />
             <category android:name="android.intent.category.DEFAULT" />
             <data android:host="incoming_call" android:scheme="omisdk" />
         </intent-filter>
@@ -843,7 +864,7 @@ Trả về: enum `OmiStartCallStatus`
 - `MISSING_AUDIO_PERMISSION`: Thiếu quyền ghi âm
 - `MISSING_VIDEO_PERMISSION`: Thiếu quyền camera
 - `SWITCHBOARD_REGISTERING`: Đang kết nối tổng đài
-- `NO_NETWORK`: Không có kết nối mạng (WiFi, 4G/5G đều tắt) — *mới từ v2.6.4*
+- `NO_NETWORK`: Không có kết nối mạng (WiFi, 4G/5G đều tắt) — *mới từ v2.6.9*
 - `SUCCESS`: Gọi thành công
 
 ### Nhận cuộc gọi
@@ -951,7 +972,7 @@ Sau khi gọi hàm này, OmiSDK sẽ kết thúc cuộc gọi và trả về k�
 - `omiClient.getSipUser()`: Lấy sip user hiện tại
 - `omiClient.getSipTransport()`: Lấy transport hiện tại (AUTO, TCP, UDP)
 - `omiClient.updateSipTransport(transport)`: Cập nhật transport (OmiSipTransport.AUTO, OmiSipTransport.TCP, OmiSipTransport.UDP)
-- `omiClient.logout(onCompleted = { ... })`: Đăng xuất (clear session). Callback `onCompleted` được gọi sau khi OMISIP stack dừng hoàn toàn. An toàn để gọi ngay trong callback nếu cần login lại ngay — *mới từ v2.6.4*
+- `omiClient.logout(onCompleted = { ... })`: Đăng xuất (clear session). Callback `onCompleted` được gọi sau khi OMISIP stack dừng hoàn toàn. An toàn để gọi ngay trong callback nếu cần login lại ngay — *mới từ v2.6.9*
 
 ### Status Call
 - 0: Cuộc gọi chưa bắt đầu
